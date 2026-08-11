@@ -55,7 +55,7 @@ function SCPSwaper:Init()
                 end
             end
         end) 
-    else if self.main.netEvent.isClient then    
+    elseif self.main.netEvent.isClient then    
         local base_ = GameObject.Find("Canvas")
 
         local swap_button = GameObject("SwapButton")
