@@ -56,7 +56,7 @@ function SCPSwaper:Init()
             end
         end) 
     elseif self.main.netEvent.isClient then    
-        local base_ = GameObject.Find("Canvas")
+        local base_ = GameObject.Find("PlayerCanvas")
 
         local swap_button = GameObject("SwapButton")
 
@@ -81,11 +81,12 @@ function SCPSwaper:Init()
         rt.anchorMin =  Vector2(0.5, 1)
         rt.anchorMax =  Vector2(0.5, 1)
         rt.pivot =  Vector2(0.5, 1)
-        rt.sizeDelta =  Vector2(500, 50)
+        rt.sizeDelta =  Vector2(300, 50)
         local text_ = self.textobject_:AddComponent(typeof(CS.UnityEngine.UI.Text))
         text_.alignment = CS.UnityEngine.TextAnchor.MiddleCenter
         text_.fontSize = 30
         text_.font = Resources.GetBuiltinResource(typeof(CS.UnityEngine.Font), "Arial.ttf")
+        text_.raycastTarget = false
 
         swap_button:GetComponent(typeof(CS.UnityEngine.UI.Button)).onClick:AddListener(function()        
             self:SwapMenuDisable()
@@ -138,7 +139,7 @@ end
 function SCPSwaper:AddClient(conn)
     local ply = PlayerUtilities.GetServerPlayer(conn)
     if self.scp_swap == true and ply.playerClass ~= nil then
-        if ply.playerClass:GetType().Name == "Spectator" then
+        if ply.playerClass:GetTeamID() == "Spectator" then
             table.insert(self.conn_list_prior, conn)
         else
             table.insert(self.conn_list, conn)
